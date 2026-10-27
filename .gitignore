@@ -39,3 +39,4 @@ settings_scrolled.PNG
 
 # Contains a live Paystack secret key — never commit, see .env / runtimeConfig.paystackSecretKey
 resolve_bn.md
+.vercel
