@@ -12,7 +12,7 @@
  */
 export default defineEventHandler(async (event) => {
   const clientIp = getRequestIP(event, { xForwardedFor: true }) ?? 'unknown'
-  if (isRateLimited(`resolve-account:${clientIp}`, 10, 60_000)) {
+  if (isRateLimited(`resolve-account:${clientIp}`, 30, 60_000)) {
     throw createError({ statusCode: 429, statusMessage: 'Too many requests. Please try again shortly.' })
   }
 
@@ -76,32 +76,6 @@ export default defineEventHandler(async (event) => {
 
     return { account_name: response.data.account_name }
   } catch (error) {
-    // const fallbackMessage = 'Could not resolve this account number'
-
-    // const message =
-    //   error &&
-    //     typeof error === 'object' &&
-    //     'data' in error &&
-    //     error.data &&
-    //     typeof error.data === 'object' &&
-    //     'message' in error.data
-    //     ? String((error.data as { message: unknown }).message)
-    //     : fallbackMessage
-
-    // // Preserve errors deliberately created by your own code.
-    // if (
-    //   error &&
-    //   typeof error === 'object' &&
-    //   'statusCode' in error &&
-    //   error.statusCode === 422
-    // ) {
-    //   throw error
-    // }
-
-    // throw createError({
-    //   statusCode: 422,
-    //   statusMessage: fallbackMessage,
-    // })
     if (error && typeof error === 'object' && 'statusCode' in error) throw error
     const message =
       error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
