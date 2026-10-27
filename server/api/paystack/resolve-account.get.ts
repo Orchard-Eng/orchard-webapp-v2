@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     await $fetch(dashboardUrl, { headers: { authorization } })
-  } catch (error: any) {
+  } catch(error: any) {
     const upstreamStatus = error?.response?.status
       ?? error?.statusCode
       ?? error?.status
@@ -75,34 +75,12 @@ export default defineEventHandler(async (event) => {
     }
 
     return { account_name: response.data.account_name }
-  }
-  catch (error) {
-    const fallbackMessage = 'Could not resolve this account number'
-
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) throw error
     const message =
-      error &&
-        typeof error === 'object' &&
-        'data' in error &&
-        error.data &&
-        typeof error.data === 'object' &&
-        'message' in error.data
+      error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
         ? String((error.data as { message: unknown }).message)
-        : fallbackMessage
-
-    // Preserve errors deliberately created by your own code.
-    if (
-      error &&
-      typeof error === 'object' &&
-      'statusCode' in error &&
-      error.statusCode === 422
-    ) {
-      throw error
-    }
-
-    throw createError({
-      statusCode: 422,
-      statusMessage: fallbackMessage,
-    })
+        : 'Could not resolve this account number'
+    throw createError({ statusCode: 422, statusMessage: message })
   }
-
 })
