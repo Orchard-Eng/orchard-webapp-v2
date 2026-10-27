@@ -1,0 +1,245 @@
+/* Orchard design tokens — CSS custom properties
+   Source: orchard-tokens.json (do not hand-edit; regenerate).
+   Web target: Laravel + Vue. Import once at the app root. */
+
+:root{
+  /* Signals native form-control chrome (date-picker icon, scrollbars) to render for the
+     active theme, not just design-token colors — otherwise e.g. Chrome's date input icon
+     stays dark-on-dark in dark mode regardless of any --oc-* value. */
+  color-scheme: light;
+
+  /* brand */
+  --oc-brand-deep: #0E1C2B;
+  --oc-brand-green: #5EC751;
+  --oc-brand-orange: #F98D45;
+  --oc-brand-grey: #F5F5F5;
+
+  /* color ramps */
+  --oc-green-50: #F5FCF5;
+  --oc-green-100: #E8F7E7;
+  --oc-green-200: #CFEECB;
+  --oc-green-300: #AEE3A8;
+  --oc-green-400: #86D57C;
+  --oc-green-500: #5EC751;
+  --oc-green-600: #4FAA45;
+  --oc-green-700: #3F8D38;
+  --oc-green-800: #2F6E2B;
+  --oc-green-900: #20531F;
+  --oc-green-950: #153E16;
+  --oc-orange-50: #FFF8F4;
+  --oc-orange-100: #FEEFE5;
+  --oc-orange-200: #FDDDC7;
+  --oc-orange-300: #FCC6A2;
+  --oc-orange-400: #FAAA74;
+  --oc-orange-500: #F98D45;
+  --oc-orange-600: #D7783A;
+  --oc-orange-700: #B5642F;
+  --oc-orange-800: #924E23;
+  --oc-orange-900: #723B19;
+  --oc-orange-950: #592C11;
+  --oc-slate-0: #FFFFFF;
+  --oc-slate-50: #F5F7F9;
+  --oc-slate-100: #EAEEF2;
+  --oc-slate-200: #D7DEE5;
+  --oc-slate-300: #B7C2CD;
+  --oc-slate-400: #8A97A5;
+  --oc-slate-500: #5F6D7C;
+  --oc-slate-600: #44515F;
+  --oc-slate-700: #2E3A47;
+  --oc-slate-800: #1B2836;
+  --oc-slate-900: #0E1C2B;
+  --oc-slate-950: #081119;
+  --oc-success-50: #F3FAF5;
+  --oc-success-100: #E4F3E8;
+  --oc-success-200: #C5E4CE;
+  --oc-success-300: #9ED2AC;
+  --oc-success-400: #6EBC83;
+  --oc-success-500: #3DA65A;
+  --oc-success-600: #34904E;
+  --oc-success-700: #2B7942;
+  --oc-success-800: #216235;
+  --oc-success-900: #184D29;
+  --oc-success-950: #123D20;
+  --oc-warning-50: #FEFBF4;
+  --oc-warning-100: #FDF5E4;
+  --oc-warning-200: #FCE9C6;
+  --oc-warning-300: #FADBA0;
+  --oc-warning-400: #F7C970;
+  --oc-warning-500: #F4B740;
+  --oc-warning-600: #D39E35;
+  --oc-warning-700: #B2852B;
+  --oc-warning-800: #8F6A20;
+  --oc-warning-900: #705216;
+  --oc-warning-950: #58400E;
+  --oc-danger-50: #FDF4F4;
+  --oc-danger-100: #FBE5E6;
+  --oc-danger-200: #F7C8CA;
+  --oc-danger-300: #F2A4A6;
+  --oc-danger-400: #EC767A;
+  --oc-danger-500: #E5484D;
+  --oc-danger-600: #C63D42;
+  --oc-danger-700: #A73236;
+  --oc-danger-800: #87272A;
+  --oc-danger-900: #6A1D20;
+  --oc-danger-950: #541517;
+  --oc-info-50: #F3F6FE;
+  --oc-info-100: #E2EBFC;
+  --oc-info-200: #C1D4F9;
+  --oc-info-300: #97B7F5;
+  --oc-info-400: #6393F0;
+  --oc-info-500: #2F6FEB;
+  --oc-info-600: #2860CD;
+  --oc-info-700: #2252AF;
+  --oc-info-800: #1B4290;
+  --oc-info-900: #143573;
+  --oc-info-950: #102A5E;
+
+  /* space */
+  --oc-space-0: 0px;
+  --oc-space-1: 4px;
+  --oc-space-2: 8px;
+  --oc-space-3: 12px;
+  --oc-space-4: 16px;
+  --oc-space-5: 20px;
+  --oc-space-6: 24px;
+  --oc-space-8: 32px;
+  --oc-space-10: 40px;
+  --oc-space-12: 48px;
+  --oc-space-16: 64px;
+
+  /* radius */
+  --oc-radius-none: 0px;
+  --oc-radius-sm: 8px;
+  --oc-radius-md: 12px;
+  --oc-radius-lg: 16px;
+  --oc-radius-xl: 22px;
+  --oc-radius-pill: 999px;
+
+  /* typography */
+  --oc-font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --oc-font-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --oc-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --oc-text-xs: 12px;
+  --oc-text-sm: 13px;
+  --oc-text-base: 14px;
+  --oc-text-md: 16px;
+  --oc-text-lg: 18px;
+  --oc-text-xl: 22px;
+  --oc-text-2xl: 26px;
+  --oc-text-3xl: 34px;
+  --oc-text-4xl: 44px;
+  --oc-text-5xl: 52px;
+  --oc-weight-regular: 400;
+  --oc-weight-medium: 500;
+  --oc-weight-semibold: 600;
+  --oc-weight-bold: 700;
+  --oc-leading-tight: 1.02;
+  --oc-leading-snug: 1.12;
+  --oc-leading-normal: 1.5;
+  --oc-leading-relaxed: 1.6;
+
+  /* elevation */
+  --oc-shadow-sm: 0 1px 2px rgba(14,28,43,.06), 0 1px 3px rgba(14,28,43,.05);
+  --oc-shadow-md: 0 4px 12px rgba(14,28,43,.08), 0 2px 4px rgba(14,28,43,.04);
+  --oc-shadow-lg: 0 16px 40px rgba(14,28,43,.12);
+
+  /* motion */
+  --oc-duration-fast: 120ms;
+  --oc-duration-base: 180ms;
+  --oc-duration-slow: 280ms;
+  --oc-ease-standard: cubic-bezier(.2,.7,.2,1);
+  --oc-ease-emphasized: cubic-bezier(.2,.8,.2,1);
+
+  /* semantic aliases (light) */
+  --oc-text-primary: #0E1C2B;
+  --oc-text-secondary: #44515F;
+  --oc-text-muted: #5F6D7C;
+  --oc-text-faint: #8A97A5;
+  --oc-text-inverse: #FFFFFF;
+  --oc-text-brand: #3F8D38;
+  --oc-text-link: #3F8D38;
+  --oc-bg-canvas: #FBFCFD;
+  --oc-bg-surface: #FFFFFF;
+  --oc-bg-subtle: #F5F7F9;
+  --oc-bg-muted: #EAEEF2;
+  --oc-bg-inverse: #0E1C2B;
+  --oc-border-default: #EAEEF2;
+  --oc-border-strong: #D7DEE5;
+  --oc-border-focus: #5EC751;
+  --oc-action-primary-bg: #5EC751;
+  --oc-action-primary-bgHover: #54B849;
+  --oc-action-primary-fg: #0E1C2B;
+  --oc-action-secondary-bg: #0E1C2B;
+  --oc-action-secondary-bgHover: #17293A;
+  --oc-action-secondary-fg: #FFFFFF;
+  --oc-action-ghost-fg: #0E1C2B;
+  --oc-action-ghost-border: #D7DEE5;
+  --oc-accent-bg: #F98D45;
+  --oc-accent-fg: #0E1C2B;
+  --oc-accent-subtle: #FEEFE5;
+  --oc-accent-subtleFg: #924E23;
+  --oc-status-success-fg: #2B7942;
+  --oc-status-success-bg: #E4F3E8;
+  --oc-status-success-solid: #3DA65A;
+  --oc-status-warning-fg: #8F6A20;
+  --oc-status-warning-bg: #FDF5E4;
+  --oc-status-warning-solid: #F4B740;
+  --oc-status-danger-fg: #A73236;
+  --oc-status-danger-bg: #FBE5E6;
+  --oc-status-danger-solid: #C63D42;
+  --oc-status-info-fg: #1B4290;
+  --oc-status-info-bg: #E2EBFC;
+  --oc-status-info-solid: #2F6FEB;
+  --oc-focus-ring: rgba(94,199,81,.35);
+}
+
+[data-theme="dark"]{
+  color-scheme: dark;
+
+  /* semantic aliases (dark) — primitives above are theme-agnostic */
+  --oc-text-primary: #F5F7F9;
+  --oc-text-secondary: #B7C2CD;
+  --oc-text-muted: #8A97A5;
+  --oc-text-faint: #5F6D7C;
+  --oc-text-inverse: #0E1C2B;
+  --oc-text-brand: #86D57C;
+  --oc-text-link: #86D57C;
+  --oc-bg-canvas: #081119;
+  --oc-bg-surface: #0E1C2B;
+  --oc-bg-subtle: #1B2836;
+  --oc-bg-muted: #2E3A47;
+  --oc-bg-inverse: #FFFFFF;
+  --oc-border-default: rgba(255,255,255,.08);
+  --oc-border-strong: rgba(255,255,255,.16);
+  --oc-border-focus: #5EC751;
+  --oc-action-primary-bg: #5EC751;
+  --oc-action-primary-bgHover: #86D57C;
+  --oc-action-primary-fg: #0E1C2B;
+  --oc-action-secondary-bg: #FFFFFF;
+  --oc-action-secondary-bgHover: #EAEEF2;
+  --oc-action-secondary-fg: #0E1C2B;
+  --oc-action-ghost-fg: #F5F7F9;
+  --oc-action-ghost-border: rgba(255,255,255,.18);
+  --oc-accent-bg: #F98D45;
+  --oc-accent-fg: #0E1C2B;
+  --oc-accent-subtle: rgba(249,141,69,.16);
+  --oc-accent-subtleFg: #FCC6A2;
+  --oc-status-success-fg: #9ED2AC;
+  --oc-status-success-bg: rgba(61,166,90,.16);
+  --oc-status-success-solid: #3DA65A;
+  --oc-status-warning-fg: #FADBA0;
+  --oc-status-warning-bg: rgba(244,183,64,.16);
+  --oc-status-warning-solid: #F4B740;
+  --oc-status-danger-fg: #F2A4A6;
+  --oc-status-danger-bg: rgba(229,72,77,.16);
+  --oc-status-danger-solid: #E5484D;
+  --oc-status-info-fg: #97B7F5;
+  --oc-status-info-bg: rgba(47,111,235,.16);
+  --oc-status-info-solid: #2F6FEB;
+  --oc-focus-ring: rgba(94,199,81,.45);
+}
+
+/* handy utilities */
+.oc-tnum{ font-variant-numeric: tabular-nums; font-feature-settings:"tnum" 1; }
+.oc-display{ font-family: var(--oc-font-display); }
+.oc-ui{ font-family: var(--oc-font-ui); }
