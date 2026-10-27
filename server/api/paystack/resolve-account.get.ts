@@ -23,10 +23,32 @@ export default defineEventHandler(async (event) => {
   if (!authorization) {
     throw createError({ statusCode: 401, statusMessage: 'Authentication required' })
   }
+
+  // Remove trailing slashes to avoid malformed URLs.
+  const apiBase = String(config.apiBase).replace(/\/+$/, '')
+  const dashboardUrl = `${apiBase}/api/users/dashboard`
+
   try {
-    await $fetch(target + 'api/users/dashboard', { headers: { authorization } })
-  } catch {
-    throw createError({ statusCode: 401, statusMessage: 'Authentication required' })
+    await $fetch(dashboardUrl, { headers: { authorization } })
+  } catch(error: any) {
+    const upstreamStatus = error?.response?.status
+      ?? error?.statusCode
+      ?? error?.status
+      ?? null
+
+    console.error('Resolve-account authentication check failed', {
+      upstreamStatus,
+      message: error?.message ?? 'Unknown upstream error',
+      dashboardUrl,
+    })
+
+    if (upstreamStatus === 401 || upstreamStatus === 403) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Your session is invalid or has expired. Please sign in again.',
+      })
+    }
+    throw createError({ statusCode: 502, statusMessage: 'Authentication required' })
   }
 
   const { account_number: accountNumber, bank_code: bankCode } = getQuery(event)
