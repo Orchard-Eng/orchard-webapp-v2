@@ -1,0 +1,104 @@
+@import './tokens.css';
+@import './fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--oc-font-ui);
+  background: var(--oc-bg-canvas);
+  color: var(--oc-text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--oc-font-display);
+}
+
+/*
+ * Styling for WYSIWYG HTML (product description / investment note) rendered via v-html —
+ * hand-rolled against the existing --oc-* tokens rather than @tailwindcss/typography, whose
+ * default gray-scale "prose" output doesn't match this design system and would need
+ * substantial re-theming to fit, for what's otherwise a small, well-contained ruleset.
+ */
+.oc-prose {
+  color: var(--oc-text-secondary);
+  font-size: var(--oc-text-base);
+  line-height: var(--oc-leading-relaxed);
+}
+.oc-prose > :first-child {
+  margin-top: 0;
+}
+.oc-prose > :last-child {
+  margin-bottom: 0;
+}
+.oc-prose p {
+  margin: 0 0 var(--oc-space-3);
+}
+.oc-prose h1, .oc-prose h2, .oc-prose h3, .oc-prose h4 {
+  font-family: var(--oc-font-display);
+  font-weight: var(--oc-weight-semibold);
+  color: var(--oc-text-primary);
+  line-height: var(--oc-leading-snug);
+  margin: var(--oc-space-5) 0 var(--oc-space-2);
+  scroll-margin-top: var(--oc-space-6);
+}
+.oc-prose h1 { font-size: var(--oc-text-xl); }
+.oc-prose h2 { font-size: var(--oc-text-lg); }
+.oc-prose h3, .oc-prose h4 { font-size: var(--oc-text-md); }
+.oc-prose ul, .oc-prose ol {
+  margin: 0 0 var(--oc-space-3);
+  padding-left: var(--oc-space-5);
+}
+.oc-prose ul { list-style: disc; }
+.oc-prose ol { list-style: decimal; }
+.oc-prose li {
+  margin-bottom: var(--oc-space-1);
+}
+.oc-prose a {
+  color: var(--oc-text-link);
+  text-decoration: underline;
+}
+.oc-prose strong, .oc-prose b {
+  font-weight: var(--oc-weight-semibold);
+  color: var(--oc-text-primary);
+}
+.oc-prose blockquote {
+  border-left: 2px solid var(--oc-border-strong);
+  padding-left: var(--oc-space-3);
+  margin: 0 0 var(--oc-space-3);
+  font-style: italic;
+  color: var(--oc-text-muted);
+}
+.oc-prose-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 var(--oc-space-3);
+}
+.oc-prose table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: collapse;
+  font-size: var(--oc-text-sm);
+}
+.oc-prose th, .oc-prose td {
+  border: 1px solid var(--oc-border-default);
+  padding: var(--oc-space-2) var(--oc-space-3);
+  text-align: left;
+  vertical-align: top;
+}
+.oc-prose th > p, .oc-prose td > p {
+  margin: 0;
+}
+.oc-prose thead, .oc-prose tr:first-child {
+  background: var(--oc-bg-subtle);
+}
+
+/* route transition (--oc-duration-base / --oc-ease-standard, see nuxt.config.ts pageTransition) */
+.oc-fade-enter-active,
+.oc-fade-leave-active {
+  transition: opacity var(--oc-duration-base) var(--oc-ease-standard);
+}
+.oc-fade-enter-from,
+.oc-fade-leave-to {
+  opacity: 0;
+}

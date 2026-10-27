@@ -1,0 +1,41 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Contains real sandbox bearer token + account PII — local reference only, never commit
+ORCHARD_HANDOFF.md
+
+# Contains real test PII (BVN/NIN, emails, phone numbers) — local API reference only
+Orchard User.postman_collection.json
+
+# Local design/asset drops already copied into the app (public/images/auth/, nuxt.config.ts) —
+# not used by the app themselves
+add_money.md
+auth_sample.png
+auth_layout_images/
+settings.PNG
+settings_scrolled.PNG
+
+# Contains a live Paystack secret key — never commit, see .env / runtimeConfig.paystackSecretKey
+resolve_bn.md

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx pnpm *)",
+      "Bash(pkill -f \"nuxt.*dev\")",
+      "Bash(pkill -f \"mock_api.py\")",
+      "Bash(lsof -ti:3000,8899)",
+      "Bash(xargs -r kill -9)",
+      "Bash(nohup python3 /private/tmp/claude-501/-Users-admin-Documents-DevLab-Crowdital-orchard-webapp/0aaadd87-ec19-4ad1-b616-a0a2cefbf659/scratchpad/mock_api.py)",
+      "Bash(disown)",
+      "Bash(rm -f /tmp/nuxt-dev.log)",
+      "Bash(NUXT_PUBLIC_API_BASE=\"http://localhost:8899/\" nohup npx pnpm dev)"
+    ]
+  }
+}
