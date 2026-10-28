@@ -148,8 +148,8 @@ export default defineEventHandler(async (event) => {
         statusCode: status,
         statusMessage:
           status === 429
-            ? 'Paystack is receiving too many requests. Please try again shortly.'
-            : 'Paystack is temporarily unavailable. Please try again later.',
+            ? 'We are receiving too many requests. Please try again shortly.'
+            : 'Account resolution is temporarily unavailable. Please try again later.',
       })
     }
 
