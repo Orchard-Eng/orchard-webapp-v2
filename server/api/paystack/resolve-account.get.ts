@@ -61,52 +61,122 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, statusMessage: 'Paystack secret key is not configured' })
   }
 
+  // try {
+  //   const response = await $fetch<{ status: boolean; message: string; data?: { account_name: string; account_number: string } }>(
+  //     'https://api.paystack.co/bank/resolve',
+  //     {
+  //       query: { account_number: accountNumber, bank_code: bankCode },
+  //       headers: { Authorization: `Bearer ${config.paystackSecretKey}` }
+  //     }
+  //   )
+
+  //   if (!response.status || !response.data?.account_name) {
+  //     throw createError({ statusCode: 422, statusMessage: response.message || 'Could not resolve this account number' })
+  //   }
+
+  //   return { account_name: response.data.account_name }
+  // } catch (error) {
+  //   if (error && typeof error === 'object' && 'statusCode' in error) throw error
+  //   const message =
+  //     error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
+  //       ? String((error.data as { message: unknown }).message)
+  //       : 'Could not resolve this account number'
+  //   throw createError({ statusCode: 422, statusMessage: message })
+  // }
+
   try {
-    const response = await $fetch<{ status: boolean; message: string; data?: { account_name: string; account_number: string } }>(
-      'https://api.paystack.co/bank/resolve',
-      {
-        query: { account_number: accountNumber, bank_code: bankCode },
-        headers: { Authorization: `Bearer ${config.paystackSecretKey}` }
+    const response = await $fetch<{
+      status: boolean
+      message: string
+      data?: {
+        account_name: string
+        account_number: string
       }
-    )
+    }>('https://api.paystack.co/bank/resolve', {
+      query: {
+        account_number: accountNumber,
+        bank_code: bankCode,
+      },
+      headers: {
+        Authorization: `Bearer ${config.paystackSecretKey}`,
+      },
+    })
 
     if (!response.status || !response.data?.account_name) {
-      throw createError({ statusCode: 422, statusMessage: response.message || 'Could not resolve this account number' })
+      throw createError({
+        statusCode: 422,
+        statusMessage: 'Could not resolve this account number',
+      })
     }
 
-    return { account_name: response.data.account_name }
-  } catch (error) {
-    const fallbackMessage = 'Could not resolve this account number'
+    return {
+      account_name: response.data.account_name,
+    }
+  } catch (error: unknown) {
+    const err = error as {
+      statusCode?: number
+      status?: number
+      statusMessage?: string
+      message?: string
+      data?: { message?: string }
+      response?: {
+        status?: number
+        _data?: { message?: string }
+      }
+    }
 
-    const message =
-      error &&
-        typeof error === 'object' &&
-        'data' in error &&
-        error.data &&
-        typeof error.data === 'object' &&
-        'message' in error.data
-        ? String((error.data as { message: unknown }).message)
-        : fallbackMessage
-
-    // Preserve errors deliberately created by your own code.
-    if (
-      error &&
-      typeof error === 'object' &&
-      'statusCode' in error &&
-      error.statusCode === 422
-    ) {
+    // Preserve errors deliberately created by this endpoint.
+    if (err.statusCode === 422) {
       throw error
     }
 
-    throw createError({
-      statusCode: 422,
-      statusMessage: fallbackMessage,
+    // Get the HTTP status returned by Paystack, if available.
+    const status =
+      err.response?.status ??
+      err.statusCode ??
+      err.status
+
+    const paystackMessage =
+      err.response?._data?.message ??
+      err.data?.message ??
+      err.message ??
+      ''
+
+    // Rate limits and upstream server errors are genuine API failures.
+    if (status === 429 || (status !== undefined && status >= 500)) {
+      throw createError({
+        statusCode: status,
+        statusMessage:
+          status === 429
+            ? 'Paystack is receiving too many requests. Please try again shortly.'
+            : 'Paystack is temporarily unavailable. Please try again later.',
+      })
+    }
+
+    // Invalid account details or other account-resolution failures.
+    if (
+      status === 400 ||
+      status === 404 ||
+      status === 422 ||
+      /account|resolve|not found|invalid/i.test(paystackMessage)
+    ) {
+      throw createError({
+        statusCode: 422,
+        statusMessage: 'Could not resolve this account number',
+      })
+    }
+
+    // Authentication/configuration failures and other unexpected errors
+    // should not be presented as an invalid account number.
+    console.error('Paystack account resolution failed', {
+      status,
+      message: paystackMessage,
     })
-    // if (error && typeof error === 'object' && 'statusCode' in error) throw error
-    // const message =
-    //   error && typeof error === 'object' && 'data' in error && error.data && typeof error.data === 'object' && 'message' in error.data
-    //     ? String((error.data as { message: unknown }).message)
-    //     : 'Could not resolve this account number'
-    // throw createError({ statusCode: 422, statusMessage: message })
+
+    throw createError({
+      statusCode: 502,
+      statusMessage: 'Unable to verify this bank account right now. Please try again later.',
+    })
   }
+
 })
